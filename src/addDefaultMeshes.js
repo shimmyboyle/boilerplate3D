@@ -4,7 +4,44 @@ import {
 	MeshBasicMaterial,
 	MeshStandardMaterial,
 	Mesh,
+	TextureLoader,
+	MeshPhysicalMaterial,
+	SphereGeometry,
 } from 'three'
+
+//define my texture loader
+
+const loader = new TextureLoader()
+
+//example function using textures and mesh physical material
+
+export const addTexturedMesh = () => {
+	//color
+	const color = loader.load('Leather_Padded_002_basecolor.png')
+	const normal = loader.load('Leather_Padded_002_normal.png')
+	const displace = loader.load('Leather_Padded_002_height.png')
+	const metallic = loader.load('Leather_Padded_002_metallic.png')
+	const ao = loader.load('Leather_Padded_002_ambientOcclusion.png')
+	const roughness = loader.load('Leather_Padded_002_roughness.png')
+
+	const sphere = new SphereGeometry(0.5, 100, 100)
+	const sphereMaterial = new MeshPhysicalMaterial({
+		map: color,
+		normalMap: normal,
+		displacementMap: displace,
+		displacementScale: 0.05,
+		aoMap: ao,
+		//metalness: metallic,
+		roughness: roughness,
+		//transmission: 0.5,
+		//ior: 2.33,
+		
+		
+	})
+	const sphereMesh = new Mesh(sphere, sphereMaterial)
+	return sphereMesh
+
+}
 
 //we're creating two simple functions now that create two different types of boxes, one made of a mesh basic material, one made of a mesh standard material and each is given a different color
 export const addBoilerPlateMeshes = () => {
